@@ -8,7 +8,7 @@ public class PropositionalLogic
         String infix = "", postfix = "";
         
         // usable tokens
-        System.out.println("Tokens:\n>: implication\n<: biconditional\n&: conjunction\nv: disjunction\n~: negation\n");
+        System.out.println("Tokens:\n>: implication\n<: biconditional\n&: conjunction\nv: disjunction\n@: exclusive disjunction\n~: negation\n");
         
         //get a logical expression from the user
         System.out.println("Enter a logical expression:");
@@ -46,7 +46,7 @@ public class PropositionalLogic
             {
                 postfix += c;
             }
-            else if(c=='>'||c=='<'||c=='V'||c=='&'||c=='~') //add operators to the postfix
+            else if(c=='>'||c=='<'||c=='V'||c=='&'||c=='~'||c=='@') //add operators to the postfix
             {
                 while(stack.peek()!='#' && priority(stack.peek())>= priority(c)) //check priority
                 {
@@ -84,12 +84,14 @@ public class PropositionalLogic
             return 1;
         if(token=='>') //implication
             return 2;
-        if(token=='V') //disjunction
+        if(token=='@') //exclusive disjunction
             return 3;
-        if(token=='&') //conjunction
+        if(token=='V') //disjunction
             return 4;
-        if(token=='~') //negation
+        if(token=='&') //conjunction
             return 5;
+        if(token=='~') //negation
+            return 6;
         if(token=='(') //open bracket
             return 0;
             
@@ -110,7 +112,7 @@ public class PropositionalLogic
         {
             for(int i=0; i<postfix.length(); i++)
             {
-                c = postfix.charAt(i); //process the posfix expression
+                c = postfix.charAt(i); //process the postfix expression
                 if(set==0 && (c=='P' || c=='Q' || c=='R'))
                 {
                     stack.push(t);
@@ -232,6 +234,19 @@ public class PropositionalLogic
                         stack.push(t); //F v T = T
                     else if(p=='F' && q=='F')
                         stack.push(f); //F v F = F
+                }
+                else if(c=='@') //evaluate an exclusive disjunction
+                {
+                    q = stack.pop();
+                    p = stack.pop();
+                    if(p=='T' && q=='T')
+                        stack.push(f); //T @ T = F
+                    else if(p=='T' && q=='F')
+                        stack.push(t); //T @ F = T
+                    else if(p=='F' && q=='T')
+                        stack.push(t); //F @ T = T
+                    else if(p=='F' && q=='F')
+                        stack.push(f); //F @ F = F
                 }
             }
             c = (char)stack.pop(); //pop truth value of the current case

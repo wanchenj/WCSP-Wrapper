@@ -4,7 +4,7 @@ public class PropositionalLogic
 {
     public static void main(String[] args) 
     {
-        Scanner user = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         String infix = "", postfix = "";
         
         // usable tokens
@@ -12,8 +12,11 @@ public class PropositionalLogic
         
         //get a logical expression from the user
         System.out.println("Enter a logical expression:");
-        infix = user.next();
+        infix = scan.next();
         //infix = "(P&Q)>(PvQ)"; //tautology example
+        //infix = "(~PvQ)<(P>Q)"; //tautology example
+        //infix = "P>(P>(P>P))"; //tautology example
+        
         //infix = "(P&~P)"; //contradiction example
         //infix = "(P>R)&(Q>R)"; //contingency example
         System.out.println("Infix expression: " + infix); 
@@ -23,6 +26,7 @@ public class PropositionalLogic
         System.out.println("P\tQ\tR\t"+infix); //print a truth table
         System.out.println("-------------------------------------"); 
         System.out.println(infix+" is a "+evaluate(postfix)); // evaluate the postfix expression
+        
     }
     
     private static String postfix(String infix)
@@ -34,7 +38,7 @@ public class PropositionalLogic
         char c; //current opperand/opperator being processed
         
         
-        
+        // parse Infix expression into stack
         for(int i=0; i<infix.length(); i++)
         {
             c = Character.toUpperCase(infix.charAt(i)); //process the infix expression, one opperand/opperator at a time
@@ -66,7 +70,7 @@ public class PropositionalLogic
                 }
             }
         }
-        while(stack.peek()!='#') //pop whats left on the stack
+        while(stack.peek()!='#') //pop everything left on the stack
             {
                 c = (char)stack.pop();
                 postfix += c;

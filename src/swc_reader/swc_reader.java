@@ -1,3 +1,7 @@
+//package swc_reader;
+
+import swc_reader.Variable;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -6,13 +10,22 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 
 import java.io.*;
+import java.util.*;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class swc_reader
 {
+
+	// create a list of variables
+	static Map<String, Variable> variables;
+
 	public static void main(String[] args)
 	{
+		// instantiate the variables list
+		variables = new HashMap<String, Variable>();
+
 		// read the file
 		//
 		try
@@ -64,6 +77,27 @@ public class swc_reader
 	public static void handleVar(String line)
 	{
 		//System.out.println("Creating variable: " + line);
+		//create a variable object
+		Variable tempVar = new Variable();
+	
+// TODO: get the name of the variable that is longer than 1 character
+
+		// get the name
+		Pattern nameP = Pattern.compile(".:");
+		Matcher nameMatcher = nameP.matcher(line);
+		nameMatcher.find();
+		String name = nameMatcher.group();
+		name = name.replace(":", "");
+
+		System.out.println("name is: " + name);
+
+		tempVar.name = name;
+
+		// put the variable in the variable dictionary
+		variables.put(name, tempVar);
+
+		// add the variable to the list
+		//variables.add(tempVar);
 	}
 
 	public static void handleConstraint(String line)
@@ -84,6 +118,8 @@ public class swc_reader
 			float confidence = Float.parseFloat(numMatcher.group());
 
 			System.out.println("found confidence: " + confidence);
+
+			// TODO: call the correct function for the correct truth table
 		}		
 		//System.out.println("Handling constraint: " + line);
 	}

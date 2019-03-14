@@ -63,7 +63,7 @@
 		# ~:	 NOT		:exclusive disjunction
 		# @:	 XOR
 		# >:	 implication
-		# <=>:	 equivalence  *
+		# =:	 equivalence  	:biconditional
 
 	# ex1: Usman left the milk out, or Greg, but not both
 	c: v1-1 @ v2-1

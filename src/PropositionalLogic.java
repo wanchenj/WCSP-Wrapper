@@ -8,13 +8,13 @@ public class PropositionalLogic
         String infix = "", postfix = "";
         
         // usable tokens
-        System.out.println("Tokens:\n>: implication\n<: biconditional\n&: conjunction\nv: disjunction\n@: exclusive disjunction\n~: negation\n");
+        System.out.println("Tokens:\n>: implication\n=: biconditional\n&: conjunction\nv: disjunction\n@: exclusive disjunction\n~: negation\n");
         
         //get a logical expression from the user
         System.out.println("Enter a logical expression:");
         infix = scan.next();
         //infix = "(P&Q)>(PvQ)"; //tautology example
-        //infix = "(~PvQ)<(P>Q)"; //tautology example
+        //infix = "(~PvQ)=(P>Q)"; //tautology example
         //infix = "P>(P>(P>P))"; //tautology example
         
         //infix = "(P&~P)"; //contradiction example
@@ -46,7 +46,7 @@ public class PropositionalLogic
             {
                 postfix += c;
             }
-            else if(c=='>'||c=='<'||c=='V'||c=='&'||c=='~'||c=='@') //add operators to the postfix
+            else if(c=='>'||c=='='||c=='V'||c=='&'||c=='~'||c=='@') //add operators to the postfix
             {
                 while(stack.peek()!='#' && priority(stack.peek())>= priority(c)) //check priority
                 {
@@ -80,7 +80,7 @@ public class PropositionalLogic
     
     public static int priority(int token)
     {
-        if(token=='<') //biconditional
+        if(token=='=') //biconditional
             return 1;
         if(token=='>') //implication
             return 2;
@@ -196,7 +196,7 @@ public class PropositionalLogic
                     else if(p=='F')
                         stack.push(t); // ~F = T
                 }
-                else if(c=='<') //evaluate a biconditional
+                else if(c=='=') //evaluate a biconditional
                 {
                     q = stack.pop();
                     p = stack.pop();

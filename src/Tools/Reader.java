@@ -1,6 +1,7 @@
-//package swc_reader;
+package Tools;
 
-import swc_reader.Variable;
+import Tools.Variable;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,23 +16,35 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class swc_reader
+public class Reader
 {
 
 	// create a list of variables
 	static Map<String, Variable> variables;
 
-	public static void main(String[] args)
+	// consrtuctor
+	public Reader() 
 	{
+		
+		// instantiate the variables list
+		variables = new HashMap<String, Variable>();
+	}
+
+	// constructor 2
+	public Reader(String file)
+	{
+	
 		// instantiate the variables list
 		variables = new HashMap<String, Variable>();
 
+		System.out.println("in Reader(string file) with file: " + file);		
+		
 		// read the file
 		//
 		try
 		{
 			// open the file
-			FileInputStream fstream = new FileInputStream("format.txt");
+			FileInputStream fstream = new FileInputStream(file);
 
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -123,4 +136,5 @@ public class swc_reader
 		}		
 		//System.out.println("Handling constraint: " + line);
 	}
+
 }

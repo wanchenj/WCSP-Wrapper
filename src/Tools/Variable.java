@@ -1,4 +1,4 @@
-package swc_reader;
+package Tools;
 
 public class Variable
 {

@@ -1,3 +1,5 @@
+package Tools;
+
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -5,10 +7,15 @@ import java.util.ArrayList;
 public class Formatter {
 	boolean fileExist = false;
 	PrintWriter writer;
-	
-	void FormatterInit() throws FileNotFoundException, UnsupportedEncodingException {
+
+	public Formatter()
+	{
+		// do nothing
+	}
+
+	public void FormatterInit() throws FileNotFoundException, UnsupportedEncodingException {
 		if (fileExist == false) {
-			writer = new PrintWriter("Input.txt", "UTF-8");
+			writer = new PrintWriter("UCS-input.txt", "UTF-8");
 			fileExist = true;
 		}
 		else {
@@ -17,7 +24,7 @@ public class Formatter {
 		}
 	}
 	
-	void FormatterHeaderLine(int variableNum, int variableMaxDomain, int constraintNum, int globalUpperBound) {
+	public void FormatterHeaderLine(int variableNum, int variableMaxDomain, int constraintNum, int globalUpperBound) {
 		writer.println("Sample"+" "+variableNum+" "+variableMaxDomain+" "+constraintNum+" "+globalUpperBound);
 		String temp = "";
 		for (int i=0; i<variableNum; i++) {
@@ -26,7 +33,7 @@ public class Formatter {
 		writer.println(temp);
 	}
 	
-	void FormatterConstraintArityOne(int numDiff, int firstWeight, int secondWeight) {
+	public void FormatterConstraintArityOne(int numDiff, int firstWeight, int secondWeight) {
 		//default first variable is 0. default weight is 0
 		writer.println("1"+" "+"0"+" "+"0"+numDiff);
 		if (firstWeight == 0) {
@@ -41,7 +48,7 @@ public class Formatter {
 		}
 	}
 	
-	void FormatterConstraintArityTwo(int numDiff, int firstWeight, int secondWeight, int thirdWeight, int fourthWeight) {
+	public void FormatterConstraintArityTwo(int numDiff, int firstWeight, int secondWeight, int thirdWeight, int fourthWeight) {
 		//default fist variable is 0, second is 1
 		writer.println("2"+" "+"0"+" "+"1"+" "+"0"+numDiff);
 		if (firstWeight == 0) {
@@ -61,12 +68,12 @@ public class Formatter {
 		}
 	}
 	
-	void FormatterConstraintArityThree() {
+	public void FormatterConstraintArityThree() {
 		//default first variable is 0, second is 1, third is 2.
 	}
 	
 	
-	void FormatterClose() {
+	public void FormatterClose() {
 		writer.close();
 		fileExist = false;
 	}

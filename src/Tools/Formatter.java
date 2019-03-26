@@ -14,14 +14,27 @@ public class Formatter {
 	}
 
 	public void FormatterInit() throws FileNotFoundException, UnsupportedEncodingException {
-		if (fileExist == false) {
-			writer = new PrintWriter("UCS-input.txt", "UTF-8");
-			fileExist = true;
+		try{	
+			if (fileExist == false) {
+				writer = new PrintWriter("UCS-input.txt", "UTF-8");
+				fileExist = true;
+			}
+			else {
+				System.out.println("file already exist, please close it before init");
+				return;
+			}
 		}
-		else {
-			System.out.println("file already exist, please close it before init");
+		catch(FileNotFoundException f)
+		{
+			System.out.println("File not found");
 			return;
 		}
+		catch(UnsupportedEncodingException u)
+		{
+			System.out.println("unsuported encoding");
+			return;
+		}
+
 	}
 	
 	public void FormatterHeaderLine(int variableNum, int variableMaxDomain, int constraintNum, int globalUpperBound) {

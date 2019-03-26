@@ -19,32 +19,56 @@ import java.util.regex.Pattern;
 public class Reader
 {
 
+	boolean DEBUG;
+
 	// create a list of variables
-	static Map<String, Variable> variables;
+	public Map<String, Variable> variables;
+	public ArrayList<String> constraints;
+
+	// store the filename, since we may open it multiple times
+	String fileName;
 
 	// consrtuctor
 	public Reader() 
 	{
 		
-		// instantiate the variables list
+		// instantiate the variables and constraints list
 		variables = new HashMap<String, Variable>();
+		constraints = new ArrayList<String>();
 	}
 
 	// constructor 2
-	public Reader(String file)
+	public Reader(String file, boolean DEBUG_)
 	{
 	
-		// instantiate the variables list
+		// instantiate the variables and constraints list
 		variables = new HashMap<String, Variable>();
+		constraints = new ArrayList<String>();
+		fileName = file;
 
-		System.out.println("in Reader(string file) with file: " + file);		
+		DEBUG = DEBUG_;
 		
-		// read the file
+		if(DEBUG)
+		{
+			System.out.println("in Reader(string file) with file: " + file);		
+		}	
+	}
+
+	public void readAllVars()
+	{
+
+		//debug message
+		if(DEBUG)
+		{
+			System.out.println("\n\nin readAllVars");
+		}
+
+		// read the file and get all the variables
 		//
 		try
 		{
 			// open the file
-			FileInputStream fstream = new FileInputStream(file);
+			FileInputStream fstream = new FileInputStream(fileName);
 
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -53,7 +77,15 @@ public class Reader
 			// read line by line
 			while((strLine = br.readLine()) != null)
 			{
-				handleLine(strLine);
+				// trim the line
+				strLine = strLine.trim();
+
+				if(strLine.startsWith("v"))
+				{
+
+					handleVar(strLine);
+
+				}
 			}
 
 			// close the file
@@ -64,7 +96,49 @@ public class Reader
 		}
 	}
 
-	public static void handleLine(String line)
+	public void readAllConstraints()
+	{
+
+		//debug message
+		if(DEBUG)
+		{
+			System.out.println("\n\nin readAllConstraints");
+		}
+
+		// read the file and get all the variables
+		//
+		try
+		{
+			// open the file
+			FileInputStream fstream = new FileInputStream(fileName);
+
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+
+			// read line by line
+			while((strLine = br.readLine()) != null)
+			{
+				// trim the line
+				strLine = strLine.trim();
+
+				if(strLine.startsWith("c"))
+				{
+
+				handleConstraint(strLine);
+
+				}
+			}
+
+			// close the file
+			in.close();
+		}catch(Exception e)
+		{
+			System.err.println("Error: " + e.getMessage());
+		}
+	}
+
+	public void handleLine(String line)
 	{
 		// trim the string
 		line = line.trim();
@@ -77,17 +151,13 @@ public class Reader
 			// check for variables
 
 		}
-		if(line.startsWith("v"))
-		{
-			handleVar(line);
-		}
 		if(line.startsWith("c"))
 		{
 			handleConstraint(line);
 		}
 	}
 
-	public static void handleVar(String line)
+	public void handleVar(String line)
 	{
 		//System.out.println("Creating variable: " + line);
 		//create a variable object
@@ -102,18 +172,31 @@ public class Reader
 		String name = nameMatcher.group();
 		name = name.replace(":", "");
 
-		System.out.println("name is: " + name);
 
 		tempVar.name = name;
 
+		// set the domain of the variable
+		Pattern domainToken = Pattern.compile(",");
+		Matcher domainMatcher = domainToken.matcher(line);
+	
+		// get the number of matches
+		int domain = 0;
+		while(domainMatcher.find())
+		{
+			domain++;
+		}
+		
+		// set the domain of the Variable
+		tempVar.domain = domain
+			
+			;	
 		// put the variable in the variable dictionary
 		variables.put(name, tempVar);
 
-		// add the variable to the list
-		//variables.add(tempVar);
+		
 	}
 
-	public static void handleConstraint(String line)
+	public void handleConstraint(String line)
 	{
 		// get the confidence
 		Pattern confPattern = Pattern.compile("\\[.\\d+\\]");
@@ -129,10 +212,21 @@ public class Reader
 			Matcher numMatcher = numPattern.matcher(match);
 			numMatcher.find();
 			float confidence = Float.parseFloat(numMatcher.group());
+			
+			// remove the confidence and other shit from the string
+			line = line.replace("[", "");
+			line = line.replace("]", "");
+			line = line.replace("c", "");
+			line = line.replace(":", "");
+			
+			line = line.replace(Float.toString(confidence), "");	
+			line = line.replace(Float.toString(confidence).replace("0", ""), "");
+				
+			if(DEBUG)
+			{
+				System.out.println("found confidence: " + confidence + " and constraint: " + line );
+			}
 
-			System.out.println("found confidence: " + confidence);
-
-			// TODO: call the correct function for the correct truth table
 		}		
 		//System.out.println("Handling constraint: " + line);
 	}

@@ -1,0 +1,83 @@
+# the '#' symbol will be used for comments
+# white spaces will be ignored 
+
+### Formatting guide for WCSPLift Wrapper 
+
+# SECTION: environment
+	# in this section, everything that is known about 
+	# the environment will be entered.
+	# These are the axioms of the environment. 
+	# This section also only contains literals, as in
+	# there are not any relations that are included
+
+	# the format for our axioms will be as follows:
+	k<i>:(<text description>)
+
+	#ex1, ex2
+	k1:(the sky is blue)
+	k2:(the milk is not in the fridge)
+
+	#k<i> represents the name of the literal,
+	# must start with k, and any number or letter may follow
+	# must have a ':' followed by a statement surrounded by
+	# parentheses
+	
+	# this section isn't actually going to help construct the 
+	# WCSPLift file, but rather help deconstruct the 
+	# results
+
+# SECTION: variables
+	# this section will list all of  the variables with
+	# their prior proabilities. 
+	
+	# the format for inputting variables is as follows:
+	v<i>: (<text explaination>)[<possible value 1>:<prob>,<meaning>;...
+	<possible value n>:<prob>,<meaning>]
+	
+	# ex1, ex2:
+	v1:(Usman left the milk out)[0:0.5,false;1:0.5,true]
+	v2:(Greg left the milk out)[0:0.5, false;1:0.5,true]
+	v3:(weather)[0:0.3,sunny;1:0.3,rainy;2:0.4,cloudy]
+	v4:(Usman had class)[0:0.2,false;1:0.8,true]
+	v5:(Usman went to class)[0:0.5,false;1:0.5,true]
+
+# SECTION: Constraints
+	# this section contains all of the constraints
+	# and includes the certainty, or weight, with which
+	# each constraint is believed to hold
+
+	# by default, the constraint will be assumed to be 
+	# a hard constraint, meaning a confidence of 1, which
+	# will this constraint a weight of MAX_WEIGHT for the
+	# WCSPLift file. 
+
+	# the format of a constraint is as follows
+	c[<confidence>]: v<i>-<val*> <operation> v<j>-<val>
+	
+	# the value of the variable is optional, by default, the 
+	# value will be 1
+
+	# the following operations will be supported:
+		# v:	 OR		:disjunction
+		# &:	 AND		:conjunction
+		# ~:	 NOT		:exclusive disjunction
+		# @:	 XOR
+		# >:	 implication
+		# =:	 equivalence  	:biconditional
+
+	# ex1: Usman left the milk out, or Greg, but not both
+	c: v1-1 @ v2-1
+		# in this example, there is no confidence 
+		# indicated, meaning it is assumed to be
+		# a hard constraint
+
+	#ex2: if the weather is cloudy, then Usman left the milk
+	# out with a high chance
+	c[.8]: v3-2 > v1-1
+
+	# parentheses can be used to nest relations
+	# ex3: If usman left the milk out, this implies 
+	# Usman had class, and went to class
+	# ... most likely
+	c[.8]: v1-1 > (v4-1 & v5-1)
+	

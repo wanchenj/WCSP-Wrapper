@@ -1,9 +1,14 @@
 // put this in the Tools package
 package Tools;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
-public class PropositionalLogic 
+
+import static java.lang.Math.log;
+
+public class PropositionalLogic
 {
     // constructor
     public PropositionalLogic()
@@ -16,7 +21,7 @@ public class PropositionalLogic
         Stack<Character> stack = new Stack<>(); //operator stack
         stack.push('#'); //initialize stack with # token
         
-        String postfix = "";
+        StringBuilder postfix = new StringBuilder();
         char c; //current opperand/opperator being processed
         
         
@@ -26,13 +31,13 @@ public class PropositionalLogic
             c = Character.toUpperCase(infix.charAt(i)); //process the infix expression, one opperand/opperator at a time
             if(c=='P'||c=='Q'||c=='R') //add propositions to the postfix
             {
-                postfix += c;
+                postfix.append(c);
             }
             else if(c=='>'||c=='='||c=='V'||c=='&'||c=='~'||c=='@') //add operators to the postfix
             {
                 while(stack.peek()!='#' && priority(stack.peek())>= priority(c)) //check priority
                 {
-                    postfix += (char)stack.pop(); //add appropriate operator to the postfix
+                    postfix.append((char) stack.pop()); //add appropriate operator to the postfix
                 }
                 stack.push(c);
             }
@@ -47,7 +52,7 @@ public class PropositionalLogic
                     c = (char)stack.pop();
                     if(c!='(')
                     {
-                        postfix += c;
+                        postfix.append(c);
                     }
                 }
             }
@@ -55,9 +60,9 @@ public class PropositionalLogic
         while(stack.peek()!='#') //pop everything left on the stack
             {
                 c = (char)stack.pop();
-                postfix += c;
+                postfix.append(c);
             }
-        return postfix;
+        return postfix.toString();
     }
     
     public static int priority(int token)
@@ -262,5 +267,26 @@ public class PropositionalLogic
             return "contradiction.";
         else //mixed case
             return "contingency.";
-    } 
+    }
+    public static List<Double> truthTableToWeight(List<Boolean> truthTable, int possibility){
+        int tNum=0;
+        for (Boolean entry : truthTable) {
+            if (entry) {
+                tNum++;
+            }
+        }
+        Double truthWeight =  -log((double) possibility / tNum);
+        Double falseWeight =  -log((double) (1 - possibility) / (truthTable.size() - tNum));
+
+        List<Double> weights = new ArrayList<>();
+        for (Boolean entry : truthTable) {
+            if (entry) {
+                weights.add(truthWeight);
+            }
+            else{
+                weights.add(falseWeight);
+            }
+        }
+        return weights;
+    }
 }

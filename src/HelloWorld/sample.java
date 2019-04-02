@@ -1,17 +1,15 @@
-package HelloWorld;
-
 public class sample {
 
 
-	native void helloFromC();
+	public native void helloFromC();
 
 	public sample()
 	{
 		// do nothing constructor
 	}
 
-	static public void main(String argv[]){
-		System.loadLibrary("ctest");
+	public static void main(String[] args){
+		System.loadLibrary("sample");
 		sample sam_1 = new sample();
 		sam_1.helloFromC();
 	

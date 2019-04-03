@@ -62,7 +62,7 @@ public class Formatter {
 		
 		binaryExpression = new int[constraintNum];
 		String header = "";
-		for (int i=0; i<binaryExpression.length; i++) {
+		for (int i=0; i<constraintNum; i++) {
 			binaryExpression[i] = 0;
 			header = header + Integer.toString(arrayofConstraint.get(i)) + " ";
 		}
@@ -70,7 +70,7 @@ public class Formatter {
 		writer.println(constraintNum+" "+header+combinationNum);
 		for (int i=0; i<combinationNum; i++) {
 			String temp = "";
-			for (int j=0; j<binaryExpression.length; j++) {
+			for (int j=0; j<constraintNum; j++) {
 				temp = temp + binaryExpression[j] + " ";
 			}
 			

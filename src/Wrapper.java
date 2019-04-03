@@ -69,23 +69,36 @@ public class Wrapper
 		// now read all the constraints
 		reader.readAllConstraints();	
 		
-		// get the number of constraints
+		// get the number of constraints and variables
 		int numConstraints = reader.constraints.size();
+		int numVariables = keys.size(); 
+		System.out.println("num numConstraints: " + numConstraints + " with " + numVariables + " variables");
 
-		System.out.println("num numConstraints: " + numConstraints);
-
-
+		
 		//TODO: pass the variables and the number of constraints to the Formatter
-		//	waiting on Formatter
-
+		formatter.FormatterHeaderLine(numVariables, 10, numConstraints, 10);
+		
 		// iterate through the constraints
 		for(int i = 0; i < reader.constraints.size(); i++){
 			//TODO: call the logicBuddy for this constraint, and store it:
 			//	tempArray = logicBuddy.func1(reader.constraints.get(i), reader.weight_to_confidence.get(i));
 			System.out.println("add constraint: " + reader.constraints.get(i) + " with confidence: " + reader.weight_to_confidence.get(i));
 		
+			// for now use dummy variables
+			ArrayList<Integer> arrayOfConstraint = new ArrayList<Integer>();
+			ArrayList<Double> arrayOfWeights = new ArrayList<Double>();
+
+			// more dummy data 
+			for(int j = 0; j < 4; j++){
+				Double dj = Double.valueOf(j);
+				arrayOfConstraint.add(j);
+				arrayOfWeights.add(dj);
+			}
+
+			// close the formatter
+			formatter.FormatterClose();
 			// now pass this tempArray to the formatter
-			// 	formatter.write_constraint(tempArray);
+//			formatter.FormatterConstraintInput(arrayOfConstraint, arrayOfWeights);
 		}
 
 	}

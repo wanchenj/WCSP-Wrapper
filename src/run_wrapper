@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo Enter a swc file:
+
+read fileName
+java Wrapper $fileName
+
+../../401/wcsp-solver/bin/wcsp -L ../../401/WCSPLift-interface/who_left_the_milk_out.dimacs >> output.txt 
+

@@ -23,7 +23,9 @@ public class Reader
 
 	// create a list of variables
 	public Map<String, Variable> variables;
-	public ArrayList<String> constraints;
+	public List<String> constraints;		// must be  indexed same as 
+	public List<Float> weight_to_confidence;		// 		this
+
 
 	// store the filename, since we may open it multiple times
 	String fileName;
@@ -35,6 +37,7 @@ public class Reader
 		// instantiate the variables and constraints list
 		variables = new HashMap<String, Variable>();
 		constraints = new ArrayList<String>();
+		weight_to_confidence = new ArrayList<Float>();
 	}
 
 	// constructor 2
@@ -44,6 +47,7 @@ public class Reader
 		// instantiate the variables and constraints list
 		variables = new HashMap<String, Variable>();
 		constraints = new ArrayList<String>();
+		weight_to_confidence = new ArrayList<Float>();
 		fileName = file;
 
 		DEBUG = DEBUG_;
@@ -134,7 +138,7 @@ public class Reader
 			in.close();
 		}catch(Exception e)
 		{
-			System.err.println("Error: " + e.getMessage());
+			System.err.println("Error with DataInputStream or something: " + e.getMessage());
 		}
 	}
 
@@ -227,7 +231,19 @@ public class Reader
 				System.out.println("found confidence: " + confidence + " and constraint: " + line );
 			}
 
-		}		
+			String tempConstraint = line;
+			// add the constraint to the list
+			constraints.add(tempConstraint);
+			weight_to_confidence.add(confidence);	
+			
+
+		}	
+
+		else{
+			// still add the constraint and add a confidence (default)
+//			constraints.add(line);
+//			weight_to_confidence.add(1.0f);
+		}	
 		//System.out.println("Handling constraint: " + line);
 	}
 

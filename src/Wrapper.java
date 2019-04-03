@@ -23,12 +23,30 @@ public class Wrapper
 
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException
 	{
+		// print the args
+		try{ 
+			if(args.length == 0){
+				System.out.println("please write the filename directly after \"java Wrapper\" ");
+				throw new IOException();
+			}
+	
+		}
+		catch(IOException e){
+			System.out.println("please write the filename directly after \"java Wrapper\" ");
+		}
+
+		String fileName = "";
+		if(args.length != 0){
+			fileName = args[0];	
+		}
+
+
 		// get the reader for reading
-		Reader reader = new Reader("Tools/format.txt", true);		
+		Reader reader = new Reader(fileName, true);		
 		
 		// get a Formatter object to write the UCS file
-			Formatter formatter = new Formatter();
-			formatter.FormatterInit();	
+		Formatter formatter = new Formatter();
+		formatter.FormatterInit();	
 
 		// get a PropositionalLogic object
 		PropositionalLogic logicBuddy = new PropositionalLogic();
@@ -47,8 +65,29 @@ public class Wrapper
 			System.out.println("var:" + key + "  with domain: " + tempVar.domain);
 		}
 
+
 		// now read all the constraints
 		reader.readAllConstraints();	
+		
+		// get the number of constraints
+		int numConstraints = reader.constraints.size();
+
+		System.out.println("num numConstraints: " + numConstraints);
+
+
+		//TODO: pass the variables and the number of constraints to the Formatter
+		//	waiting on Formatter
+
+		// iterate through the constraints
+		for(int i = 0; i < reader.constraints.size(); i++){
+			//TODO: call the logicBuddy for this constraint, and store it:
+			//	tempArray = logicBuddy.func1(reader.constraints.get(i), reader.weight_to_confidence.get(i));
+			System.out.println("add constraint: " + reader.constraints.get(i) + " with confidence: " + reader.weight_to_confidence.get(i));
+		
+			// now pass this tempArray to the formatter
+			// 	formatter.write_constraint(tempArray);
+		}
+
 	}
 
 }

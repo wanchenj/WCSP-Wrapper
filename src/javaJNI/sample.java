@@ -1,11 +1,15 @@
+package HelloWorld;
 public class sample {
 
 
 	public native void helloFromC();
 
+
+
 	public sample()
 	{
 		// do nothing constructor
+		listLoadedLibraries();
 	}
 
 	public static void main(String[] args){

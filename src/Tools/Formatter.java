@@ -7,10 +7,11 @@ import java.util.ArrayList;
 public class Formatter {
 	boolean fileExist = false;
 	PrintWriter writer;
+	int[] binaryExpression;
 
 	public Formatter()
 	{
-		// do nothing
+		
 	}
 
 	public void FormatterInit() throws FileNotFoundException, UnsupportedEncodingException {
@@ -46,48 +47,73 @@ public class Formatter {
 		writer.println(temp);
 	}
 	
-	public void FormatterConstraintArityOne(int numDiff, int firstWeight, int secondWeight) {
+	public void FormatterConstraintInput(ArrayList<Integer> arrayofConstraint, ArrayList<Double> arrayofWeights) {
 		//default first variable is 0. default weight is 0
-		writer.println("1"+" "+"0"+" "+"0"+numDiff);
-		if (firstWeight == 0) {
-			writer.println("1"+secondWeight);
+		if (arrayofConstraint == null || arrayofConstraint.size() == 0) {
+			System.out.println("error occured when trying to read the constraint array");
+			return;
 		}
-		else if (secondWeight == 0) {
-			writer.println("0"+firstWeight);
+		if (arrayofWeights == null || arrayofWeights.size() == 0) {
+			System.out.println("error occured when trying to read the weight array");
 		}
-		else {
-			writer.println("0"+firstWeight);
-			writer.println("1"+secondWeight);
+		
+		int constraintNum = arrayofConstraint.size();
+		int combinationNum = (int) Math.pow(2, constraintNum);
+		
+		binaryExpression = new int[constraintNum];
+		String header = "";
+		for (int i=0; i<binaryExpression.length; i++) {
+			binaryExpression[i] = 0;
+			header = header + Integer.toString(arrayofConstraint.get(i)) + " ";
 		}
+		
+		writer.println(constraintNum+" "+header+combinationNum);
+		for (int i=0; i<combinationNum; i++) {
+			String temp = "";
+			for (int j=0; j<binaryExpression.length; j++) {
+				temp = temp + binaryExpression[j] + " ";
+			}
+			
+			writer.println(temp + arrayofWeights.get(i));
+			
+			binaryUpdate();
+		}
+		
+		
+		
 	}
-	
-	public void FormatterConstraintArityTwo(int numDiff, int firstWeight, int secondWeight, int thirdWeight, int fourthWeight) {
-		//default fist variable is 0, second is 1
-		writer.println("2"+" "+"0"+" "+"1"+" "+"0"+numDiff);
-		if (firstWeight == 0) {
-			
-		}
-		else if (secondWeight == 0) {
-			
-		}
-		else if (thirdWeight == 0) {
-			
-		}
-		else if (fourthWeight == 0) {
-			
-		}
-		else {
-			
-		}
-	}
-	
-	public void FormatterConstraintArityThree() {
-		//default first variable is 0, second is 1, third is 2.
-	}
-	
 	
 	public void FormatterClose() {
 		writer.close();
 		fileExist = false;
+	}
+	
+	private boolean binaryUpdate() {
+		boolean overflow = true;
+		for (int i=binaryExpression.length-1; i>=0; i--) {
+			if(binaryExpression[i] == 0) {
+				overflow = false;
+			}
+		}
+		if (overflow == true) {
+			return false;
+		}
+		
+		int carry = 1;
+		for (int i=binaryExpression.length-1; i>=0; i--) {
+			if(carry != 0) {
+				if (binaryExpression[i] == 0) {
+					binaryExpression[i] = 1;
+				}
+				else {
+					binaryExpression[i] = 0;
+					carry++;
+				}
+				
+				carry--;
+			}
+		}
+		
+		return true;
 	}
 }

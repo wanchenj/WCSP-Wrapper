@@ -14,7 +14,9 @@ public class PropositionalLogic
 	private int variableAmount;
 	private int variableMax;
 	private ArrayList <Boolean> truthTable;
-	
+
+/*	Remove this:
+ *
 	 public static void main(String[] args)
 	    {
 		 
@@ -31,7 +33,8 @@ public class PropositionalLogic
 		 List<Boolean> truthTable = logicSolver.GenerateTruthTable();
 		 List<Double> truthTableWeights = logicSolver.truthTableToWeight(truthTable, possibility);
 	    }
-	 
+*/
+
 	public PropositionalLogic(String inputPropositionalLogic, int variableAmount){
 
         infix = inputPropositionalLogic;
@@ -277,7 +280,7 @@ public class PropositionalLogic
         return truthTable;
     }
 
-    public List<Double> truthTableToWeight(List<Boolean> truthTable, double possibility){
+    public ArrayList<Double> truthTableToWeight(List<Boolean> truthTable, double possibility){
         int tNum=0;
         for (Boolean entry : truthTable) {
             if (entry) {
@@ -287,7 +290,7 @@ public class PropositionalLogic
         Double truthWeight =  -log( possibility / (double) tNum);
         Double falseWeight =  -log( (1 - possibility) / (double) (truthTable.size() - tNum));
 
-        List<Double> weights = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
         for (Boolean entry : truthTable) {
             if (entry) {
                 weights.add(truthWeight);

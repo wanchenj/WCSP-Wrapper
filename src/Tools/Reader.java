@@ -222,6 +222,9 @@ public class Reader
 			line = line.replace("]", "");
 			line = line.replace("c", "");
 			line = line.replace(":", "");
+			while(line.contains("v")){
+				line = line.replace("v", "");
+			}
 			
 			line = line.replace(Float.toString(confidence), "");	
 			line = line.replace(Float.toString(confidence).replace("0", ""), "");

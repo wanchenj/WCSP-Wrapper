@@ -14,3 +14,5 @@ java Wrapper $fileName
 
 ../../401/wcsp-solver/bin/wcsp -L ./UCS-input.txt >> wcsp-output.txt 
 
+# run python read_results script
+python read_results.py

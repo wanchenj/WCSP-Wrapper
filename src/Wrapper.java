@@ -21,8 +21,19 @@ import java.util.regex.Pattern;
 public class Wrapper
 {
 
+	int maxDomain;
+	int maxCost;
+
+	public Wrapper(int maxDomain, int maxCost){
+		this.maxDomain = maxDomain;	
+		this.maxCost = maxCost;
+	}
+
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException
 	{
+		// create a Wrapper object
+		Wrapper wrapper = new Wrapper(2, 10);
+
 		// print the args
 		try{ 
 			if(args.length == 0){
@@ -48,8 +59,6 @@ public class Wrapper
 		Formatter formatter = new Formatter();
 		formatter.FormatterInit();	
 
-		// get a PropositionalLogic object
-		PropositionalLogic logicBuddy = new PropositionalLogic();
 
 		// get all the variables from the reader
 		reader.readAllVars();
@@ -76,17 +85,32 @@ public class Wrapper
 
 		
 		//TODO: pass the variables and the number of constraints to the Formatter
-		formatter.FormatterHeaderLine(numVariables, 10, numConstraints, 10);
+		formatter.FormatterHeaderLine(numVariables, 2, numConstraints, 10);
 		
 		// iterate through the constraints
 		for(int i = 0; i < reader.constraints.size(); i++){
 			//TODO: call the logicBuddy for this constraint, and store it:
 			//	tempArray = logicBuddy.func1(reader.constraints.get(i), reader.weight_to_confidence.get(i));
-			System.out.println("add constraint: " + reader.constraints.get(i) + " with confidence: " + reader.weight_to_confidence.get(i));
-	
-			// get these lists from the logicBuddy	
-			ArrayList<Integer> arrayOfConstraint = new ArrayList<Integer>();
-			ArrayList<Double> arrayOfWeights = new ArrayList<Double>();
+			System.out.println("const: " + reader.constraints.get(i) + " conf: " + reader.weight_to_confidence.get(i));
+			Float tempWeight = reader.weight_to_confidence.get(i);
+			String tempConstraint = reader.constraints.get(i);
+			
+			// get all the ids from the constraints
+			Pattern numPatt = Pattern.compile("[0-9]");
+			Matcher numMatcher = numPatt.matcher(tempConstraint);	
+			ArrayList<Integer> indexArray = new ArrayList<Integer>();
+			while(numMatcher.find()){
+				// convert the number from string to int before adding to the list			
+				indexArray.add(Integer.valueOf(numMatcher.group()));
+				System.out.println("indexArray: " + indexArray);
+			}
+		
+
+
+			 PropositionalLogic logicSolver = new PropositionalLogic(tempConstraint, 3);
+			 List<Boolean> truthTable = logicSolver.GenerateTruthTable();
+			 ArrayList<Double> truthTableWeights = logicSolver.truthTableToWeight(truthTable, tempWeight);
+			
 
 			// for now use dummy variables
 			ArrayList<Integer> a = new ArrayList<Integer>(Arrays.asList(0,2));
@@ -96,7 +120,7 @@ public class Wrapper
 
 			// close the formatter
 			// now pass this tempArray to the formatter
-			formatter.FormatterConstraintInput(a, b);
+			formatter.FormatterConstraintInput(indexArray, truthTableWeights);
 			formatter.FormatterClose();
 		}
 

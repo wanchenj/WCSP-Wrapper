@@ -4,14 +4,26 @@ This is a wrapper for [WCSPLift](https://gitlab.com/xuphys/wcsp-solver/), a Weig
 ## Requirements
 In order to use this wrapper, WCSPLift must already be installed, along with Java, and C++. 
 
-## Usage
-In order to use the wrapper, the location of WCSPLift must be known. The wrapper is run through the run\_wrapper bash script to do work. In this file, there is a variable $wcsp\_location that is used to run WCSPLift. Modify this line (line 11 in run\_wrappe) to reflect the location of WCSPLift on your machine.
+## Installation
+To get the wrapper working, there are two steps after downloading the repository. The wrapper needs to be given the correct permission, and then updated with the correct installation directory for WCSPLift. The main file that runs the wrapper is a bash script called ```run_wrapper``` located in the src/ directory. 
 
-To run the wrapper using the terminal (only checked this in Ubunutu), type:
+### update permissions
+In order to give the correct permission run the following command:
 
 ```
 chmod u+x run_wrapper
+```
+
+The chmod command has only been verified to work for Ubuntu so far. 
+
+### Update WCSPLift Installation 
+ 
+Open the run_wrapper file with any text editor. In this file, there is a variable ```$wcsp\_location``` that is used to run WCSPLift. Modify this line (line 11 in run\_wrappe) to reflect the location of WCSPLift on your machine.
+
+## Usage
+To run the wrapper using the terminal (only checked this in Ubunutu), type:
+
+```
 ./run_wrapper
 ``` 
 
-The chmod line only needs to be run once (gives executable access to the wrapper file). The wrapper will now prompt you for any additional information it needs, such as the name of the swc file. 

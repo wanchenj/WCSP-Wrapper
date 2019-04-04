@@ -7,12 +7,15 @@ read fileName
 # make sure there is no UCS-input
 rm UCS-input.txt
 
+# store the location of WCSPLift 
+wcsp_location=../../401/wcsp-solver/bin
+
 # call the actual wrapper class with the correct filename
 java Wrapper $fileName
 
 	# by this point, the Wrapper should have created a UCS-input.txt
-
-../../401/wcsp-solver/bin/wcsp -L ./UCS-input.txt >> wcsp-output.txt 
+	
+$wcsp_location/wcsp -L ./UCS-input.txt >> wcsp-output.txt 
 
 # run python read_results script
 python read_results.py

@@ -4,12 +4,13 @@ echo Enter a swc file:
 
 read fileName
 
-echo Enter the name for the UCS file
+# make sure there is no UCS-input
+rm UCS-input.txt
 
-read ucsFile
-
-
+# call the actual wrapper class with the correct filename
 java Wrapper $fileName
 
-../../401/wcsp-solver/bin/wcsp -L ../../401/WCSPLift-interface/who_left_the_milk_out.dimacs >> output.txt 
+	# by this point, the Wrapper should have created a UCS-input.txt
+
+../../401/wcsp-solver/bin/wcsp -L ./UCS-input.txt >> wcsp-output.txt 
 

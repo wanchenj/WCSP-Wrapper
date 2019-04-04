@@ -83,22 +83,21 @@ public class Wrapper
 			//TODO: call the logicBuddy for this constraint, and store it:
 			//	tempArray = logicBuddy.func1(reader.constraints.get(i), reader.weight_to_confidence.get(i));
 			System.out.println("add constraint: " + reader.constraints.get(i) + " with confidence: " + reader.weight_to_confidence.get(i));
-		
-			// for now use dummy variables
+	
+			// get these lists from the logicBuddy	
 			ArrayList<Integer> arrayOfConstraint = new ArrayList<Integer>();
 			ArrayList<Double> arrayOfWeights = new ArrayList<Double>();
 
-			// more dummy data 
-			for(int j = 0; j < 4; j++){
-				Double dj = Double.valueOf(j);
-				arrayOfConstraint.add(j);
-				arrayOfWeights.add(dj);
-			}
+			// for now use dummy variables
+			ArrayList<Integer> a = new ArrayList<Integer>(Arrays.asList(0,2));
+			ArrayList<Double> b = new ArrayList<Double>(Arrays.asList(0.5,0.5,0.5,0.5));
+
+
 
 			// close the formatter
-			formatter.FormatterClose();
 			// now pass this tempArray to the formatter
-//			formatter.FormatterConstraintInput(arrayOfConstraint, arrayOfWeights);
+			formatter.FormatterConstraintInput(a, b);
+			formatter.FormatterClose();
 		}
 
 	}

@@ -8,6 +8,7 @@ public class Formatter {
 	boolean fileExist = false;
 	PrintWriter writer;
 	int[] binaryExpression;
+	int globalUpper;
 
 	public Formatter()
 	{
@@ -41,6 +42,7 @@ public class Formatter {
 	public void FormatterHeaderLine(int variableNum, int variableMaxDomain, int constraintNum, int globalUpperBound) {
 		writer.println("Sample"+" "+variableNum+" "+variableMaxDomain+" "+constraintNum+" "+globalUpperBound);
 		String temp = "";
+		globalUpper = globalUpperBound;
 		for (int i=0; i<variableNum; i++) {
 			temp = temp + Integer.toString(variableMaxDomain) + " ";
 		}
@@ -67,7 +69,7 @@ public class Formatter {
 			header = header + Integer.toString(arrayofConstraint.get(i)) + " ";
 		}
 		
-		writer.println(constraintNum+" "+header+combinationNum);
+		writer.println(constraintNum+" "+header+" "+globalUpper+" "+combinationNum);
 		for (int i=0; i<combinationNum; i++) {
 			String temp = "";
 			for (int j=0; j<constraintNum; j++) {

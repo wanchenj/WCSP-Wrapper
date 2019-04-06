@@ -29,6 +29,7 @@ public class Wrapper
 		this.maxCost = maxCost;
 	}
 
+
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException
 	{
 		// create a Wrapper object
@@ -63,17 +64,7 @@ public class Wrapper
 		// get all the variables from the reader
 		reader.readAllVars();
 		Map<String, Variable> vars = reader.variables;
-
-		// iterate through the variables, and display them to the console for now
 		Set keys = vars.keySet();
-		Iterator<String> keyIt = keys.iterator();
-		while(keyIt.hasNext())
-		{
-			String key = keyIt.next();
-			Variable tempVar = vars.get(key);
-			System.out.println("var:" + key + "  with domain: " + tempVar.domain);
-		}
-
 
 		// now read all the constraints
 		reader.readAllConstraints();	
@@ -84,10 +75,36 @@ public class Wrapper
 		System.out.println("num numConstraints: " + numConstraints + " with " + numVariables + " variables");
 
 		
-		//TODO: pass the variables and the number of constraints to the Formatter
+		//pass the variables and the number of constraints to the Formatter for the header
 		formatter.FormatterHeaderLine(numVariables, 2, numConstraints, 10);
-		
-		// iterate through the constraints
+	
+			
+		// iterate through the variables, and display them to the console for now
+		Iterator<String> keyIt = keys.iterator();
+		while(keyIt.hasNext())
+		{
+			// get the key and variable with t hat key
+			String key = keyIt.next();
+			Variable tempVar = vars.get(key);
+			
+			// create an arraylist that only has this element in it
+			ArrayList<Integer> varIdxArray = new ArrayList<Integer>();
+			varIdxArray.add(Integer.parseInt(key));
+
+			// create an arrayList with the truth and false values
+			ArrayList<Double> varWeightArr = new ArrayList<Double>();
+			varWeightArr.add(1 - tempVar.confidence);
+			varWeightArr.add(tempVar.confidence);
+
+			// try to add this to the formatter as a constraint with one argument
+			formatter.FormatterConstraintInput(varIdxArray, varWeightArr);
+			
+			System.out.println("var:" + key + "  with domain: " + tempVar.domain + " and confidence: " + tempVar.confidence);
+		}
+
+
+
+		// iterate through the constraints and write them to the UCS file
 		for(int i = 0; i < reader.constraints.size(); i++){
 			//TODO: call the logicBuddy for this constraint, and store it:
 			//	tempArray = logicBuddy.func1(reader.constraints.get(i), reader.weight_to_confidence.get(i));
@@ -106,24 +123,24 @@ public class Wrapper
 			}
 		
 
-
-			 PropositionalLogic logicSolver = new PropositionalLogic(tempConstraint, 3);
-			 List<Boolean> truthTable = logicSolver.GenerateTruthTable();
-			 ArrayList<Double> truthTableWeights = logicSolver.truthTableToWeight(truthTable, tempWeight);
+	 		// use the logicSolver to get the array of weights 
+			PropositionalLogic logicSolver = new PropositionalLogic(tempConstraint, 3);
+			List<Boolean> truthTable = logicSolver.GenerateTruthTable();
+			ArrayList<Double> truthTableWeights = logicSolver.truthTableToWeight(truthTable, tempWeight);
 			
-
-			// for now use dummy variables
-			ArrayList<Integer> a = new ArrayList<Integer>(Arrays.asList(0,2));
-			ArrayList<Double> b = new ArrayList<Double>(Arrays.asList(0.5,0.5,0.5,0.5));
-
-
 
 			// close the formatter
 			// now pass this tempArray to the formatter
 			formatter.FormatterConstraintInput(indexArray, truthTableWeights);
-			formatter.FormatterClose();
 		}
+
+		// now that all constraints have been written, close the formatter	
+		formatter.FormatterClose();
 
 	}
 
+	public void writeVars(Map<String, Variable> vars){
+		// get the keys
+		
+	}
 }

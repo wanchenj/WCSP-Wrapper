@@ -191,9 +191,22 @@ public class Reader
 		}
 		
 		// set the domain of the Variable
-		tempVar.domain = domain
-			
-			;	
+		tempVar.domain = domain;
+
+		// get the probability of the vars
+		Pattern probPattern = Pattern.compile("\\d\\.\\d+");
+		Matcher probMatcher = probPattern.matcher(line);	
+	
+		// for now, only work with only binary variables,
+		// 	the first prob will be assumed to be for FALSE
+		probMatcher.find();
+
+		// get this as a number
+		String probFalseString = probMatcher.group();
+		Double probFalse = (double)Float.parseFloat(probFalseString);
+		System.out.println("prob False: " + probFalse);	
+
+		tempVar.confidence = 1 - probFalse;
 		// put the variable in the variable dictionary
 		variables.put(name, tempVar);
 

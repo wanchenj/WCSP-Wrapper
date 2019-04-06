@@ -4,8 +4,13 @@ echo Enter a swc file:
 
 read fileName
 
-# make sure there is no UCS-input
+echo Enter the number of solutions you want:
+
+read k_val
+
+# make sure there is no UCS-input, or output file
 rm UCS-input.txt
+rm wcsp-output.txt
 
 # store the location of WCSPLift 
 wcsp_location=../../401/wcsp-solver/bin
@@ -15,7 +20,7 @@ java Wrapper $fileName
 
 	# by this point, the Wrapper should have created a UCS-input.txt
 	
-$wcsp_location/wcsp -L ./UCS-input.txt >> wcsp-output.txt 
+python3 top_k/main.py -p $wcsp_location/wcsp -L -f ./UCS-input.txt -K $k_val >> wcsp-output.txt 
 
 # run python read_results script
-python read_results.py
+python Tools/read_results.py

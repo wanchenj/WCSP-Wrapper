@@ -155,7 +155,7 @@ public class Wrapper
 			
 
 	 		// use the logicSolver to get the array of weights 
-			PropositionalLogic logicSolver = new PropositionalLogic(tempConstraint, 3);
+			PropositionalLogic logicSolver = new PropositionalLogic(tempConstraint, indexArray.size());
 			List<Boolean> truthTable = logicSolver.GenerateTruthTable();
 			ArrayList<Double> truthTableWeights = logicSolver.truthTableToWeight(truthTable, tempWeight);
 			

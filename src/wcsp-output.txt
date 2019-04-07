@@ -1,5 +1,5 @@
 Solution 1
-Weight 1.0
+Weight 1.2
 0 1
 1 1
 2 0
@@ -7,18 +7,12 @@ Weight 1.0
 Solution 2
 Weight 1.2
 0 1
-1 1
+1 0
 2 0
 ------------
 Solution 3
 Weight 1.2
 0 1
-1 1
-2 0
-------------
-Solution 4
-Weight 1.2
-0 1
-1 1
+1 0
 2 0
 ------------

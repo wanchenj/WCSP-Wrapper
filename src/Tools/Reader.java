@@ -219,7 +219,7 @@ public class Reader
 		Pattern confPattern = Pattern.compile("\\[.\\d+\\]");
 
 		Matcher matcher = confPattern.matcher(line);
-		
+		float confidence = 0;
 		if(matcher.find())
 		{
 			String match = matcher.group();
@@ -228,11 +228,14 @@ public class Reader
 			Pattern numPattern = Pattern.compile("\\.\\d+");
 			Matcher numMatcher = numPattern.matcher(match);
 			numMatcher.find();
-			float confidence = Float.parseFloat(numMatcher.group());
+			confidence = Float.parseFloat(numMatcher.group());
 			
 			// remove the confidence and other shit from the string
 			line = line.replace("[", "");
-			line = line.replace("]", "");
+			line = line.replace("]", "");	
+
+		}
+
 			line = line.replace("c", "");
 			line = line.replace(":", "");
 			while(line.contains("v")){
@@ -251,15 +254,6 @@ public class Reader
 			// add the constraint to the list
 			constraints.add(tempConstraint);
 			weight_to_confidence.add(confidence);	
-			
-
-		}	
-
-		else{
-			// still add the constraint and add a confidence (default)
-//			constraints.add(line);
-//			weight_to_confidence.add(1.0f);
-		}	
 		//System.out.println("Handling constraint: " + line);
 	}
 

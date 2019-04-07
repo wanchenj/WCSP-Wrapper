@@ -23,4 +23,4 @@ java Wrapper $fileName
 python3 top_k/main.py -p $wcsp_location/wcsp -L -f ./UCS-input.txt -K $k_val >> wcsp-output.txt 
 
 # run python read_results script
-python Tools/read_results.py
+python Tools/read_results.py $fileName

@@ -120,18 +120,29 @@ public class Wrapper
 			Matcher numMatcher = numPatt.matcher(tempConstraint);	
 			ArrayList<Integer> indexArray = new ArrayList<Integer>();
 			int idx = 0;
+			int curPos = 0;
 			while(numMatcher.find()){
 				
 				// convert the number from string to int before adding to the list			
 				String tempStringId = numMatcher.group();
 				int tempID = Integer.valueOf(tempStringId);
 
+				// get the current position in the string
+				for(int j = curPos; j < tempConstraint.length(); j++){
+					if(String.valueOf(tempConstraint.charAt(j)).equals(tempStringId)){
+						curPos = j;
+						break;
+					}				
+				}
+				
 				// if the ID isn't in there, then add it
 				if(!indexArray.contains(tempID)){
 					indexArray.add(tempID);
 
 					// replace the string ID with the index
-					tempConstraint =  tempConstraint.replace(tempStringId, Integer.toString(idx));
+					//tempConstraint =  tempConstraint.replace(tempStringId, Integer.toString(idx));
+					tempConstraint =  tempConstraint.substring(0, curPos) + Integer.toString(idx) + 
+						tempConstraint.substring(curPos+1);
 
 					// increment the idx
 					idx += 1;
@@ -142,7 +153,9 @@ public class Wrapper
 					int idIdx = indexArray.indexOf(tempID);
 
 					// replace the ID with the idx
-					tempConstraint = tempConstraint.replace(tempStringId, Integer.toString(idIdx));
+					//tempConstraint = tempConstraint.replace(tempStringId, Integer.toString(idIdx));
+					tempConstraint =  tempConstraint.substring(0, curPos) + Integer.toString(idIdx) + 
+						tempConstraint.substring(curPos+1);
 				}
 
 				System.out.println("indexArray: " + indexArray);
@@ -150,7 +163,8 @@ public class Wrapper
 
 
 			}
-		
+	
+
 			// iterate  through the tempConstraint, replace each variable ID with it's index from the indexArray
 			
 

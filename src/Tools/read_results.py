@@ -28,7 +28,8 @@ def find_var(var, value):
                     # take out the parantheses
                     result =  result[0]
                     status = ' false '
-                    if value == 1:
+                    value = value.strip()
+                    if value == '1':
                         status = " true "
                     print('The variable: ', result, ' is ', status)
 

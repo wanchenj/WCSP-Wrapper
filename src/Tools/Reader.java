@@ -219,7 +219,7 @@ public class Reader
 		Pattern confPattern = Pattern.compile("\\[.\\d+\\]");
 
 		Matcher matcher = confPattern.matcher(line);
-		float confidence = 0;
+		float confidence = 1;
 		if(matcher.find())
 		{
 			String match = matcher.group();
@@ -245,10 +245,7 @@ public class Reader
 			line = line.replace(Float.toString(confidence), "");	
 			line = line.replace(Float.toString(confidence).replace("0", ""), "");
 				
-			if(DEBUG)
-			{
 				System.out.println("found confidence: " + confidence + " and constraint: " + line );
-			}
 
 			String tempConstraint = line;
 			// add the constraint to the list

@@ -69,14 +69,19 @@ public class Formatter {
 			header = header + Integer.toString(arrayofConstraint.get(i)) + " ";
 		}
 		
-		writer.println(constraintNum+" "+header+" "+globalUpper+" "+combinationNum);
+		writer.println(constraintNum+" "+header+globalUpper+" "+combinationNum);
 		for (int i=0; i<combinationNum; i++) {
 			String temp = "";
 			for (int j=0; j<constraintNum; j++) {
 				temp = temp + binaryExpression[j] + " ";
 			}
 			
-			writer.println(temp + arrayofWeights.get(i));
+			if(arrayofWeights.get(i) > globalUpper){
+				writer.println(temp + globalUpper);
+			}
+			else{	
+				writer.println(temp + arrayofWeights.get(i));
+			}
 			
 			binaryUpdate();
 		}

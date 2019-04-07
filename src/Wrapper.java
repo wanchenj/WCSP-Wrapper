@@ -57,7 +57,7 @@ public class Wrapper
 
 
 		// get the reader for reading
-		Reader reader = new Reader(fileName, true);		
+		Reader reader = new Reader(fileName, false);		
 		
 		// get a Formatter object to write the UCS file
 		Formatter formatter = new Formatter();
@@ -158,8 +158,8 @@ public class Wrapper
 						tempConstraint.substring(curPos+1);
 				}
 
-				System.out.println("indexArray: " + indexArray);
-				System.out.println("tempConstraint: " + tempConstraint);
+				//System.out.println("indexArray: " + indexArray);
+				//System.out.println("tempConstraint: " + tempConstraint);
 
 
 			}

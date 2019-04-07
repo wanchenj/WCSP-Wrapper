@@ -1,7 +1,7 @@
 import re
 import sys
 
-print(sys.argv[1])
+print()
 
 # open the file
 file = open('wcsp-output.txt', 'r')
@@ -36,7 +36,7 @@ def find_var(var, value):
 for line in file.readlines():
     line_elements = line.split(' ')
     if ("Solution" in line):
-        print('\n', line)
+        print(line)
     elif len(line_elements) == 2:
         if line[0] == 'Weight':
             print(line)

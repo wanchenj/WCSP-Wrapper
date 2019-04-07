@@ -53,17 +53,17 @@ public class PropositionalLogic
 		
 			truthTable = new ArrayList <Boolean>();
 			
-		 	System.out.println("Infix expression: " + infix);
+//		 	System.out.println("Infix expression: " + infix);
 	        postfix = postfix(infix); //convert expression to postfix
-	        System.out.println("Postfix expression: " + postfix); //display postfix expression
+	        //System.out.println("Postfix expression: " + postfix); //display postfix expression
 
 	      //print a truth table
 	        for(int i = 0; i < variableAmount; i++) {
-	        		System.out.print(i + "\t");
+	        	//	System.out.print(i + "\t");
 	        }
 //	        System.out.println("0\t1\t2\t"+); 
-	        System.out.println(infix);
-	        System.out.println("-------------------------------------");
+//	        System.out.println(infix);
+//	        System.out.println("-------------------------------------");
 	        return evaluate(postfix);
 
 	}
@@ -254,10 +254,10 @@ public class PropositionalLogic
             }
             
             for(boolean b:lineOfTruthTable){
-                System.out.print(b+"\t");
+//                System.out.print(b+"\t");
             }
 
-            System.out.println(c); //print truth value for user entered expression
+//            System.out.println(c); //print truth value for user entered expression
             if(c=='T') {
             		truthTable.add(true);
             		tCount++; //count truths
@@ -275,8 +275,8 @@ public class PropositionalLogic
         		logicType = "contradiction.";
         else //mixed case
         		logicType = "contingency.";
-        System.out.println(infix+" is a "+ logicType); // evaluate the postfix expression
-        System.out.println();
+//        System.out.println(infix+" is a "+ logicType); // evaluate the postfix expression
+ //       System.out.println();
         return truthTable;
     }
 
@@ -300,7 +300,7 @@ public class PropositionalLogic
             }
         }
         for (double weight: weights) {
-        		System.out.println(weight);
+//        		System.out.println(weight);
         }
         return weights;
     }

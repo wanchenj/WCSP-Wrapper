@@ -204,7 +204,7 @@ public class Reader
 		// get this as a number
 		String probFalseString = probMatcher.group();
 		Double probFalse = (double)Float.parseFloat(probFalseString);
-		System.out.println("prob False: " + probFalse);	
+//		System.out.println("prob False: " + probFalse);	
 
 		tempVar.confidence = 1 - probFalse;
 		// put the variable in the variable dictionary
@@ -245,7 +245,7 @@ public class Reader
 			line = line.replace(Float.toString(confidence), "");	
 			line = line.replace(Float.toString(confidence).replace("0", ""), "");
 				
-				System.out.println("found confidence: " + confidence + " and constraint: " + line );
+//				System.out.println("found confidence: " + confidence + " and constraint: " + line );
 
 			String tempConstraint = line;
 			// add the constraint to the list

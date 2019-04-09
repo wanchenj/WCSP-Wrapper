@@ -170,12 +170,12 @@ public class Reader
 // TODO: get the name of the variable that is longer than 1 character
 
 		// get the name
-		Pattern nameP = Pattern.compile(".:");
+		Pattern nameP = Pattern.compile("\\w+:");
 		Matcher nameMatcher = nameP.matcher(line);
 		nameMatcher.find();
 		String name = nameMatcher.group();
 		name = name.replace(":", "");
-
+		name = name.replace("v", "");
 
 		tempVar.name = name;
 

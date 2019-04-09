@@ -37,7 +37,7 @@ def find_var(var, value):
                     value = value.strip()
                     if value == '1':
                         status = " true "
-                    print('The variable: ', result, ' is ', status)
+                    print('The variable( ', var, '): ', result, ' is ', status)
 
 for line in file.readlines():
     line_elements = line.split(' ')

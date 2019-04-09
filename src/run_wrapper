@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# compile the java files
+javac -d . Tools/Formatter.java
+javac -d . Tools/Reader.java
+javac -d . Tools/Variable.java
+javac -d . Tools/PropositionalLogic.java
+javac Wrapper.java
+
 echo Enter a swc file:
 
 read fileName

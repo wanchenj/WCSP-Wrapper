@@ -18,9 +18,15 @@ def find_var(var, value):
     for line in swc.readlines():
         line = line.strip()
         if line != '':
-            if line[0] == 'v':
+            # try to get the variable name
+            reg_var = re.compile(r'v\d+')
+            find_var = re.findall(reg_var, line)
+            if len(find_var) == 1 and line[0] == 'v':      # must be 1, otherwise it's prolly a constraint
                 # this means this line is a variable, now check if the next character is var
-                if line[1] == var:
+                potential_var = find_var[0]
+                # remove the 'v'
+                potential_var = potential_var.replace('v', '')
+                if potential_var == var:
                     # get the name in the parenthesis
                     regex = re.compile(r'\(.*\)')
                     #find the regex

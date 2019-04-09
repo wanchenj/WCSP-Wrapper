@@ -1,0 +1,10 @@
+# Variables
+v0:(Usman let the dogs out)[0:0.5,false;1:0.5,true]
+v1:(Greg let the dogs out)[0:0.2,false;1:0.8,true]
+v2:(Greg had guests)[0:0.5,false;1:0.5,true]
+v3:(The dogs are out)[0:0.1,false;1:0.9,true]
+
+# Constraints
+c[.8]: v2 > v1 > v3
+c[.7]: v3 > (v0 @ v1)
+c: v0 @ v1

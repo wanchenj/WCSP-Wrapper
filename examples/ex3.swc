@@ -1,0 +1,11 @@
+# Variables
+v0:(A)[0:0.5,false;1:0.5,true]
+v1:(B)[0:0.5,false;1:0.5,true]
+v2:(C)[0:0.5,false;1:0.5,true]
+v3:(D)[0:0.5,false;1:0.5,true]
+v4:(E)[0:0.5,false;1:0.5,true]
+v5:(A occured)[0:0.00001, false;1:.99999,true]
+
+# Constraints
+c:v0 > v1 > v2 > v3 > v4
+c:v5>v0

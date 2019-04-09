@@ -1,2 +1,6 @@
 *.swp
 *.class
+**/*.classpath
+**/*.gitignore
+**/*.project
+**/*.DS_Store

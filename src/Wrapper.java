@@ -114,24 +114,30 @@ public class Wrapper
 			//System.out.println("const: " + reader.constraints.get(i) + " conf: " + reader.weight_to_confidence.get(i));
 			Float tempWeight = reader.weight_to_confidence.get(i);
 			String tempConstraint = reader.constraints.get(i);
-			
+		
+			//System.out.println("tempConstraint: " + tempConstraint);
+
 			// get all the ids from the constraints
-			Pattern numPatt = Pattern.compile("[0-9]");
+			Pattern numPatt = Pattern.compile("[0-9]+");
 			Matcher numMatcher = numPatt.matcher(tempConstraint);	
 			ArrayList<Integer> indexArray = new ArrayList<Integer>();
 			int idx = 0;
 			int curPos = 0;
+			int length = 0;
 			while(numMatcher.find()){
 				
 				// convert the number from string to int before adding to the list			
 				String tempStringId = numMatcher.group();
 				int tempID = Integer.valueOf(tempStringId);
+				int numDigitsId = tempStringId.length();
+
+				//System.out.println("the tempStringId: " + tempStringId);
 
 				// get the current position in the string
-				for(int j = curPos; j < tempConstraint.length(); j++){
-					if(String.valueOf(tempConstraint.charAt(j)).equals(tempStringId)){
+				for(int j = curPos; j < tempConstraint.length()-(numDigitsId-1); j++){
+					if(tempConstraint.substring(j, j+numDigitsId).equals(tempStringId)){
 						curPos = j;
-						break;
+						break;	
 					}				
 				}
 				
@@ -142,7 +148,7 @@ public class Wrapper
 					// replace the string ID with the index
 					//tempConstraint =  tempConstraint.replace(tempStringId, Integer.toString(idx));
 					tempConstraint =  tempConstraint.substring(0, curPos) + Integer.toString(idx) + 
-						tempConstraint.substring(curPos+1);
+						tempConstraint.substring(curPos + numDigitsId);
 
 					// increment the idx
 					idx += 1;
@@ -158,7 +164,7 @@ public class Wrapper
 						tempConstraint.substring(curPos+1);
 				}
 
-				//System.out.println("indexArray: " + indexArray);
+				//System.out.println("match:" + idx + "   indexArray: " + indexArray);
 				//System.out.println("tempConstraint: " + tempConstraint);
 
 
@@ -167,6 +173,7 @@ public class Wrapper
 
 			// iterate  through the tempConstraint, replace each variable ID with it's index from the indexArray
 			
+			//System.out.println("  -> " + tempConstraint);
 
 	 		// use the logicSolver to get the array of weights 
 			PropositionalLogic logicSolver = new PropositionalLogic(tempConstraint, indexArray.size());

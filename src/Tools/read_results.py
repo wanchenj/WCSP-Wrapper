@@ -33,12 +33,11 @@ def find_var(var, value):
                     result = re.findall(regex, line)
                     # take out the parantheses
                     result =  result[0]
-                    status = ' false '
                     value = value.strip()
                     if value == '1':
-                        status = " true "
-                    print('The variable( ', var, '): ', result, ' is ', status)
-
+                        print("{:<4}{:+<80}{:+>20}".format(var, result, 'true'))
+                    else:
+                        print("{:<4}{:-<80}{:->20}".format(var, result, 'false'))
 for line in file.readlines():
     line_elements = line.split(' ')
     if ("Solution" in line):

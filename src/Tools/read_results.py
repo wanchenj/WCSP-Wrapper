@@ -35,9 +35,9 @@ def find_var(var, value):
                     result =  result[0]
                     value = value.strip()
                     if value == '1':
-                        print("{:<4}{:+<80}{:+>20}".format(var, result, 'true'))
+                        print("v{:<4}{:+<80}{:+>20}".format(var, result, 'true'))
                     else:
-                        print("{:<4}{:-<80}{:->20}".format(var, result, 'false'))
+                        print("v{:<4}{:-<80}{:->20}".format(var, result, 'false'))
 for line in file.readlines():
     line_elements = line.split(' ')
     if ("Solution" in line):

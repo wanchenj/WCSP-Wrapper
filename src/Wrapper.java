@@ -115,7 +115,7 @@ public class Wrapper
 			Float tempWeight = reader.weight_to_confidence.get(i);
 			String tempConstraint = reader.constraints.get(i);
 		
-			//System.out.println("tempConstraint: " + tempConstraint);
+			System.out.println("original constraint: " + tempConstraint);
 
 			// get all the ids from the constraints
 			Pattern numPatt = Pattern.compile("[0-9]+");
@@ -131,7 +131,7 @@ public class Wrapper
 				int tempID = Integer.valueOf(tempStringId);
 				int numDigitsId = tempStringId.length();
 
-				//System.out.println("the tempStringId: " + tempStringId);
+				//System.out.println("the original constraint: " + tempStringId);
 
 				// get the current position in the string
 				for(int j = curPos; j < tempConstraint.length()-(numDigitsId-1); j++){
@@ -140,7 +140,6 @@ public class Wrapper
 						break;	
 					}				
 				}
-				
 				// if the ID isn't in there, then add it
 				if(!indexArray.contains(tempID)){
 					indexArray.add(tempID);
@@ -157,14 +156,16 @@ public class Wrapper
 				else{
 					// this means that the ID is in there, so get the index it's at
 					int idIdx = indexArray.indexOf(tempID);
+					
+					System.out.println("tempID: " + tempID + " is at index: " + idIdx);
 
 					// replace the ID with the idx
 					//tempConstraint = tempConstraint.replace(tempStringId, Integer.toString(idIdx));
 					tempConstraint =  tempConstraint.substring(0, curPos) + Integer.toString(idIdx) + 
-						tempConstraint.substring(curPos+1);
+						tempConstraint.substring(curPos+numDigitsId);
 				}
 
-				//System.out.println("match:" + idx + "   indexArray: " + indexArray);
+				System.out.println("match:" + idx + "   indexArray: " + indexArray);
 				//System.out.println("tempConstraint: " + tempConstraint);
 
 
@@ -173,7 +174,7 @@ public class Wrapper
 
 			// iterate  through the tempConstraint, replace each variable ID with it's index from the indexArray
 			
-			//System.out.println("  -> " + tempConstraint);
+			System.out.println("  -> " + tempConstraint + "\n---------------------------------------------\n\n");
 
 	 		// use the logicSolver to get the array of weights 
 			PropositionalLogic logicSolver = new PropositionalLogic(tempConstraint, indexArray.size());

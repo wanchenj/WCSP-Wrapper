@@ -79,6 +79,9 @@ public class Formatter {
 			if(arrayofWeights.get(i) > globalUpper){
 				writer.println(temp + globalUpper);
 			}
+			else if(arrayofWeights.get(i) <= -0){
+				writer.println(temp + '0');
+			}
 			else{	
 				writer.println(temp + arrayofWeights.get(i));
 			}

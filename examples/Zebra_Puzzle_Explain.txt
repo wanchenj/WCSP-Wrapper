@@ -1,0 +1,24 @@
+Zebra Puzzle
+
+There are 3 people in total: Princess, Prince, Millionaire.
+Each person own a car, lives at a location, and owns a pet. Their features are different from one another.
+
+Here are 6 clues to help you solve the puzzle:
+
+1. The person owns a Bugatti lives in Santa Monica
+2. The person lives in Buckingham Palace owns a cat
+3. The person owns a Ferrari does not live in White House
+4. The person owns a Lamborghini also owns a dog
+5. Millionaire owns an fish
+6. Prince doesn’t own an Lamborghini
+
+
+------------------------------------------------------------------------------------
+
+Answer to the puzzle:
+
+(Princess, Lamborghini, White House, dog)
+
+(Prince, Ferrari, Buckingham Palace, cat)
+
+(Millionaire, Bugatti, Santa Monica, fish)

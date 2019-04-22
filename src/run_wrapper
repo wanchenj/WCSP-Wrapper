@@ -20,7 +20,7 @@ rm UCS-input.txt
 rm wcsp-output.txt
 
 # store the location of WCSPLift 
-wcsp_location=../../401/wcsp-solver/bin
+wcsp_location=/Users/wanchenj/Desktop/wcsp-solver/bin
 
 # call the actual wrapper class with the correct filename
 java Wrapper $fileName
